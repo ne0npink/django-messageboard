@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sign Up</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    form { display: inline-block; text-align: left; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+    label { display: block; margin-top: 10px; }
+    input { width: 100%; padding: 6px; margin-top: 4px; }
+    button { margin-top: 15px; padding: 8px 12px; }
+    .error { color: red; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Create a New Account</h1>
+
+  {% if error_message %}
+    <div class="error">{{ error_message }}</div>
+  {% endif %}
+
+  <form method="post" action="/app/createUser">
+    {% csrf_token %}
+    <label for="user_name">Username:</label>
+    <input type="text" id="user_name" name="user_name" required>
+
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="is_admin">Admin?</label>
+    <label>
+      <input type="radio" name="is_admin" value="0" checked> No
+    </label>
+    <label>
+      <input type="radio" name="is_admin" value="1"> Yes
+    </label>
+
+
+    <button type="submit">Sign Up</button>
+  </form>
+</body>
+</html>

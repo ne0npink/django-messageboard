@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Messageboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #222;
+        }
+
+        .post {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .post.suppressed {
+            opacity: 0.6;
+            background: #f8f8f8;
+        }
+
+        .post h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #007bff;
+        }
+
+        .post .meta {
+            font-size: 0.85em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .post p.content {
+            margin-bottom: 15px;
+        }
+
+        .comments {
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .comment {
+            margin-left: 20px;
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 3px solid #ddd;
+            background: #f9f9f9;
+            border-radius: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .comment.suppressed {
+            opacity: 0.6;
+            background: #f3f3f3;
+        }
+
+        .no-comments {
+            font-style: italic;
+            color: #888;
+        }
+
+        .post:nth-child(odd) {
+            background: #ffffff;
+    }
+
+        .post:nth-child(even) {
+            background: #f9fbfd;
+        }
+
+        .post:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .comment {
+            margin-left: 25px;
+            border-left: 4px solid #bbb;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Messageboard</h1>
+
+{% for item in feed %}
+{% with post=item.post %}
+<div class="post {% if post.is_suppressed %}suppressed{% endif %}">
+    <h3>{{ post.title }}</h3>
+    <div class="meta">
+        <strong>{{ post.author.user.username }}</strong> —
+        {{ post.date|date:"Y-m-d H:i" }}
+    </div>
+
+    {% if post.is_suppressed and not user_profile.user_type.can_moderate and post.author != user_profile %}
+        <p><em>This post has been removed.</em></p>
+    {% else %}
+        <p class="content">{{ post.content }}</p>
+    {% endif %}
+
+    <div class="comments">
+        <h4>Comments</h4>
+        {% for comment in item.comments %}
+            {% if not comment.is_suppressed or comment.author == user_profile or user_profile.user_type.can_moderate %}
+            <div class="comment {% if comment.is_suppressed %}suppressed{% endif %}">
+                <p>
+                    <strong>{{ comment.author.user.username }}</strong>:
+                    {{ comment.content }}
+                </p>
+            </div>
+            {% endif %}
+        {% empty %}
+            <p class="no-comments"><em>No comments yet.</em></p>
+        {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'createComment' %}" style="margin-top: 10px;">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+
+        <textarea
+            name="content"
+            rows="2"
+            placeholder="Write a comment..."
+            style="width: 100%; resize: vertical;"
+            required
+        ></textarea>
+
+        <button type="submit" style="margin-top: 5px;">
+            Comment
+        </button>
+    </form>
+    {% endif %}
+</div>
+{% endwith %}
+{% empty %}
+<p>No posts yet.</p>
+{% endfor %}
+
+</body>
+</html>

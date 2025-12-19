@@ -1,0 +1,150 @@
+{
+    "tests": [
+        {
+            "name": "Test that createComment endpoint actually adds data to dumpFeed",
+            "score": 0.0,
+            "max_score": 2,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 400 != 201 : createComment failed: {\"error\": \"Post does not exist.\"}\n",
+            "number": "22"
+        },
+        {
+            "name": "Verify that successful createComment POST request actually adds data to (logged-in) /app/feed",
+            "score": 0.0,
+            "max_score": 1,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 400 != 201 : createComment failed: {\"error\": \"Post does not exist.\"}\n",
+            "number": "22.5"
+        },
+        {
+            "name": "Ensure admin can successfully post a comment via",
+            "score": 0.0,
+            "max_score": 0,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 400 != 201 : Server returns error for http://localhost:8000/app/createComment/ Data:{'content': 'I love fuzzy bunnies.  Everyone should.', 'post_id': 1, 'csrfmiddlewaretoken': 'xr53SKlk3J8N7ucahFBG2lWy36bkveAknsgbn48IurJGHVj029yxVkAe9wHPI44J'}Content:{\"error\": \"Post does not exist.\"}\n",
+            "number": "11.0"
+        },
+        {
+            "name": "Ensure unauthenticated comment POST returns 401 Unauthorized",
+            "score": 0,
+            "max_score": 0,
+            "status": "passed",
+            "number": "11.1"
+        },
+        {
+            "name": "Ensure regular user can successfully post a comment",
+            "score": 0.0,
+            "max_score": 0.5,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 400 != 201 : Server returned an error for http://localhost:8000/app/createComment Data:{'content': 'I love fuzzy bunnies.  Everyone should.', 'post_id': 1, 'csrfmiddlewaretoken': 'OVWFICSK9XP1kM6sVh32fZmBE3zwQaEmBLVgxqek7xONe9whg1tNNBKGRFqimrnW'}Content:{\"error\": \"Post does not exist.\"}\n",
+            "number": "31.0"
+        },
+        {
+            "name": "Verify that successful POST to /app/createPost adds data that appears in /app/dumpFeed",
+            "score": 2,
+            "max_score": 2,
+            "status": "passed",
+            "output": "Calling http://localhost:8000/app/createPost/ with {'title': 'I like the fuzzy043170 bunnies!', 'content': 'I like the fuzzy043170 bunnies!'}\nResponse:{\"message\": \"Post created\", \"id\": 61}\n\n",
+            "number": "21"
+        },
+        {
+            "name": "Verify that successful POST to /app/createPost adds data that appears in (logged-in) /app/feed",
+            "score": 1,
+            "max_score": 1,
+            "status": "passed",
+            "output": "Starting Django server...\nCalling http://localhost:8000/app/createPost with {'title': 'I like the fuzzy056107 bunnies!', 'content': 'I like the fuzzy056107 bunnies!'}\nResponse:{\"message\": \"Post created\", \"id\": 62}\n\n",
+            "number": "21.5"
+        },
+        {
+            "name": "Check server responds with success to /app/createPost",
+            "score": 0,
+            "max_score": 0,
+            "status": "passed",
+            "number": "10.0"
+        },
+        {
+            "name": "Check server responds with unauthorized to not-logged-in request to  {BASE}/app/createPost/",
+            "score": 0,
+            "max_score": 0,
+            "status": "passed",
+            "output": "Starting Django server...\n",
+            "number": "10.1"
+        },
+        {
+            "name": "Test that /app/createPost/ by a user succeeds and dumpFeed returns valid JSON containing content somewhere",
+            "score": 0.5,
+            "max_score": 0.5,
+            "status": "passed",
+            "number": "30"
+        },
+        {
+            "name": "Test that app/dumpFeed returns valid JSON",
+            "score": 1,
+            "max_score": 1,
+            "status": "passed",
+            "output": "Starting Django server...\nCalling http://localhost:8000/app/dumpFeed\n",
+            "number": "20"
+        },
+        {
+            "name": "Test /app/hideComment/ endpoint by an admin actually hides content.",
+            "score": 0.0,
+            "max_score": 2,
+            "status": "failed",
+            "output": "Test Failed: 'str' object has no attribute 'keys'\n",
+            "number": "35"
+        },
+        {
+            "name": "Verifies that hidden comments are still visible to admin.",
+            "score": 0.0,
+            "max_score": 1,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 'str' object has no attribute 'keys'\n",
+            "number": "36"
+        },
+        {
+            "name": "Test hideComment endpoint by an admin which should succeed {BASE}/app/hideComment/",
+            "score": 0.0,
+            "max_score": 0.5,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 400 != 201 : Comment creation failed: {\"error\": \"Post does not exist.\"}\n",
+            "number": "13.3"
+        },
+        {
+            "name": "Test hideComment/ endpoint by an admin which should succeed {BASE}/app/hideComment/",
+            "score": 0.0,
+            "max_score": 0.5,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 400 != 201 : Comment creation failed: {\"error\": \"Post does not exist.\"}\n",
+            "number": "13.4"
+        },
+        {
+            "name": "Ensure /app/hidePost/ removes post from /app/dumpFeed",
+            "score": 0.0,
+            "max_score": 2,
+            "status": "failed",
+            "output": "Starting Django server...\n\nTest Failed: 400 != 200 : /app/hidePost/ failed: {\"error\": \"Post does not exist\"}\n",
+            "number": "34"
+        },
+        {
+            "name": "Unauthenticated POST to /app/hidePost endpoint should return 401 unauthorized.",
+            "score": 0,
+            "max_score": 0,
+            "status": "passed",
+            "output": "Starting Django server...\n",
+            "number": "13.0"
+        },
+        {
+            "name": "Logs in, Ensures that / endpoint returns a page containing logged-in username",
+            "score": 0,
+            "max_score": 0,
+            "status": "passed",
+            "output": "Starting Django server...\n<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Team Bio</title>\n    <style>\n      body { text-align: center; font-family: Arial, sans-serif; margin-top: 50px; }\n      .highlight { background-color: #fffbcc; font-weight: bold; padding: 0 5px; }\n    </style>\n  </head>\n  <body>\n    <h1>About Me</h1>\n    <p>I&#x27;m Nick Park. If you&#x27;ve found this, then you&#x27;re reading my bio.</p>\n\n    \n      <p>Welcome back, <span class=\"highlight\">Tester Student</span>!</p>\n    \n\n    <p>Current time: 00:22</p>\n  </body>\n</html>\n\n",
+            "number": "19"
+        }
+    ],
+    "leaderboard": [],
+    "visibility": "visible",
+    "stdout_visibility": "visible",
+    "execution_time": "1.47",
+    "score": 4.5
+}

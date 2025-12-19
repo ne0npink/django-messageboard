@@ -1,0 +1,10 @@
+<form method="post" action="/app/createComment/">
+  {% csrf_token %}
+  <label for="post_id">Post ID:</label>
+  <input type="number" id="post_id" name="post_id" required>
+
+  <label for="content">Content:</label>
+  <textarea id="content" name="content" required></textarea>
+
+  <button type="submit">Submit Comment</button>
+</form>
